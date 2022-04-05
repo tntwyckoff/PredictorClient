@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import SetTestString from './components/SetTestString';
+import ShowResults from './components/ShowResults';
 
 function App() {
   return (
@@ -9,6 +10,8 @@ function App() {
         {/* <img src={logo} className="App-logo" alt="logo" /> */}
       </header>
       <SetTestString />
+      <hr />
+      < ShowResults/>
     </div>
   );
 }

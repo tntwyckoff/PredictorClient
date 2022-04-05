@@ -30,6 +30,15 @@ class ApiService {
         return fetch(req).then(res => res.json());
     }
 
+    analyzeString(stringToAnalyze) {
+        const req = new Request(`${this.apiBase}/${stringToAnalyze}`, {
+            method: 'GET',
+            headers: new Headers()
+        });
+
+        return fetch(req).then(res => res.json());
+    }
+
 };
 
 export default ApiService;

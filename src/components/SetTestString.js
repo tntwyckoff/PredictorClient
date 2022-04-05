@@ -14,12 +14,57 @@ class SetTestString extends React.Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.loadLatestString = this.loadLatestString.bind(this);
+        this.resetString = this.resetString.bind(this);
         this.updateString = this.updateString.bind(this);
     }
 
     componentDidMount() {
-        console.debug(`componentDidMount()`);
+        console.debug(`SetTestString: componentDidMount()`);
+        this.loadLatestString();
+    }
 
+    render() {
+        return (
+            <div>
+                <table>
+                    <tbody>
+                        <tr>
+                            <td width="20%">
+                                Test string:
+                            </td>
+                            <td>
+                                {this.state.currentString}
+                            </td>
+                        </tr>
+                        {this.state.loaded &&
+                            <tr>
+                                <td width="20%">
+                                    Set string:
+                                </td>
+                                <td>
+                                    <input type="text" value={this.state.currentString} onChange={this.handleChange} />
+                                </td>
+                            </tr>
+                        }
+                        {this.state.loaded &&
+                            <tr>
+                                <td>
+                                <button onClick={this.updateString}>Post</button>
+                                <button onClick={this.resetString}>Reset</button>
+                                </td>
+                                <td>
+                                    &nbsp;
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
+
+    loadLatestString() {
         this.apiService.getCurrentString()
             .then(
                 (data) => {
@@ -37,7 +82,6 @@ class SetTestString extends React.Component {
                     console.error(`Unable to DL source string: ${error}`);
                 }
             );
-
     }
 
     handleChange(event) {
@@ -52,6 +96,10 @@ class SetTestString extends React.Component {
         // reach out to the api here
     }
 
+    resetString(e) {
+        this.loadLatestString();
+    }
+
     updateString(e) {
         console.debug(`POSTING...`);
         this.apiService.setCurrentString(this.state.currentString)
@@ -63,44 +111,6 @@ class SetTestString extends React.Component {
             });
     }
 
-    render() {
-        return (
-            <div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                Test string:
-                            </td>
-                            <td>
-                                {this.state.currentString}
-                            </td>
-                        </tr>
-                        {this.state.loaded &&
-                            <tr>
-                                <td>
-                                    Set string:
-                                </td>
-                                <td>
-                                    <input type="text" value={this.state.currentString} onChange={this.handleChange} />
-                                </td>
-                            </tr>
-                        }
-                        {this.state.loaded &&
-                            <tr>
-                                <td>
-                                    <button onClick={this.updateString}>Post</button>
-                                </td>
-                                <td>
-                                    &nbsp;
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        );
-    }
 }
 
 export default SetTestString;
