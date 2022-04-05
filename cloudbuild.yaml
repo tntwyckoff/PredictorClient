@@ -1,0 +1,27 @@
+steps:
+# Build all supported versions.
+- name: 'gcr.io/cloud-builders/docker'
+  args:
+  - 'build'
+  - '--tag=gcr.io/$PROJECT_ID/predictorclient'
+  - '--file=Dockerfile'
+  - '.'
+  id: 'buildstep'
+
+# Tag the latest version as :latest. We use gcr.io/cloud-builders/docker here
+# and not gcr.io/$PROJECT_ID/docker because the latter may not yet exist.
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['tag', 'gcr.io/$PROJECT_ID/predictorclient', 'gcr.io/$PROJECT_ID/latest']
+  wait_for: ['buildstep']
+  id: 'latest'
+
+# Push the container image to Container Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'gcr.io/$PROJECT_ID/predictorclient']
+
+# Deploy container image to Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['run', 'deploy', 'predictorclient', '--image', 'gcr.io/$PROJECT_ID/predictorclient', '--region', 'us-central1', '--platform', 'managed', '--allow-unauthenticated']
+
+images:
+- 'gcr.io/$PROJECT_ID/predictorclient'
