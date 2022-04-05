@@ -23,7 +23,7 @@ COPY . ./
 
 # Run the web service on container startup.
 # CMD ["ts-node", "./src/index.ts"]
-CMD ["npm", "run", "build"]
+CMD ["npm", "start"]
 #RUN npm run build
 
 # production environment
