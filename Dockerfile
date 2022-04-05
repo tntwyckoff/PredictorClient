@@ -1,9 +1,10 @@
 # Use the official lightweight Node.js 12 image.
 # https://hub.docker.com/_/node
-FROM node:17-slim
+FROM node:17-slim as builder
 
 # Create and change to the app directory.
-WORKDIR /usr/src/app
+WORKDIR /app
+ENV PATH /app/node_modules/.bin:$PATH
 
 # Copy application dependency manifests to the container image.
 # A wildcard is used to ensure both package.json AND package-lock.json are copied.
@@ -21,4 +22,11 @@ COPY . ./
 
 # Run the web service on container startup.
 # CMD ["ts-node", "./src/index.ts"]
-CMD ["npm", "run", "build"]
+# CMD ["npm", "run", "build"]
+RUN npm run build
+
+# production environment
+FROM nginx:stable-alpine
+COPY --from=builder /app/build /usr/share/nginx/html
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]    
