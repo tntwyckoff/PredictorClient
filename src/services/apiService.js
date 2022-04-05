@@ -27,7 +27,7 @@ class ApiService {
             })
         });
 
-        return fetch(req).then(res => res.json());
+        return fetch(req);
     }
 
     analyzeString(stringToAnalyze) {

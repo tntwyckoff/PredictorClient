@@ -1,3 +1,7 @@
+
+# truly local env var's
+.env.local
+
 # Logs
 logs
 *.log

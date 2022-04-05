@@ -104,7 +104,7 @@ class SetTestString extends React.Component {
         console.debug(`POSTING...`);
         this.apiService.setCurrentString(this.state.currentString)
             .then(() => {
-                window.alert('Post was successful.');
+                // window.alert('Post was successful.');
             },
                 (error) => {
                     console.error(`Unable to DL source string: ${error}`);
