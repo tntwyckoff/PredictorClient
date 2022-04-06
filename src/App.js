@@ -1,17 +1,18 @@
 import logo from './logo.svg';
 import './App.css';
+import './buttonStyles.css';
+import './materialStyles.css';
 import SetTestString from './components/SetTestString';
-import ShowResults from './components/ShowResults';
+import PredictNextString from './components/PredictNextString';
 
 function App() {
   return (
     <div id= "app" className="App">
       <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
       </header>
       <SetTestString />
       <hr />
-      < ShowResults/>
+      <PredictNextString />
     </div>
   );
 }

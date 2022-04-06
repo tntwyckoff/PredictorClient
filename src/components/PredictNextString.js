@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import ApiService from '../services/apiService';
+import './PredictNextString.css';
 
-class ShowResults extends React.Component {
+class PredictNextString extends React.Component {
     apiService = new ApiService();
 
     constructor(props) {
@@ -24,34 +25,28 @@ class ShowResults extends React.Component {
 
     render() {
         return (
-            <div>
-                <table>
-                    <tbody>
-                        <tr>
-                            <td>
-                                String to analyze:
-                            </td>
-                            <td>
-                                <input type="text" value={this.state.currentString} onChange={this.handleChange} />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <button onClick={this.analyzeString}>Analyze</button>
-                            </td>
-                            <td>
-                                &nbsp;
-                            </td>
-                        </tr>
-                        {this.state.lastSuccess &&
-                            <tr>
-                                <td>
-                                    <ul>{this.state.details}</ul>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+            <div class="predict-next-string">
+                <div class="autoCentered">
+                    <div class="label">
+                        <p>
+                            String to analyze:
+                        </p>
+                    </div>
+                    <div class="container">
+                        <form>
+                            <div class="group">
+                                <input type="text" required value={this.state.currentString} onChange={this.handleChange} />
+                                <label>Enter one of the words from above</label>
+                            </div>
+                        </form>
+                    </div>
+                    <button class="btn btn-4 btn-sep icon-info" onClick={this.analyzeString}>Analyze</button>
+                </div>
+                {this.state.lastSuccess &&
+                    <div class="autoCentered">
+                        <ul>{this.state.details}</ul>
+                    </div>
+                }               
             </div>
         );
     }
@@ -63,7 +58,7 @@ class ShowResults extends React.Component {
                     if (data) {
                         const lDetails = [];
 
-                        for(const propertyKey in data){
+                        for (const propertyKey in data) {
                             lDetails.push(this.getLiForProperty(data, propertyKey));
                         }
 
@@ -92,11 +87,11 @@ class ShowResults extends React.Component {
     }
 
     getLiForProperty(obj, propertyKey) {
-        var pct = obj[propertyKey].toLocaleString (undefined, { minimumFractionDigits: 3 });
+        var pct = obj[propertyKey].toLocaleString(undefined, { minimumFractionDigits: 3 });
         return <li key={propertyKey}>{propertyKey}: {pct}</li>;
     }
 
 }
 
 
-export default ShowResults;
+export default PredictNextString;
